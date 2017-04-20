@@ -2,12 +2,24 @@
 #include <stdlib.h>
 #include <string.h>
 #include "dungeon.h"
+#include <unistd.h>
 
 void printDungeon(room_t dlvls);
 	
 int main(int argc, char** argv) {
 	
 	// Read the first line from file to get the levels and make a linked list
+	if(argc < 2)
+	{
+		fprintf(stderr, "No Level File Specified\n");
+		exit(1);
+	}
+	if( access( argv[1], F_OK ) == -1 ) 
+	{
+		// File does not exist
+		fprintf(stderr, "File does not exist\n");
+		exit(1);
+	}
 	
 	FILE * fp = fopen(argv[1], "r");
 	char levels[MAX_LINE];
